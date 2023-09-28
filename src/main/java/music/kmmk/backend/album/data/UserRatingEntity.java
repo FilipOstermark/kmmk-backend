@@ -11,7 +11,7 @@ public class UserRatingEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(name = "user_email", unique = true, nullable = false)
+    @Column(name = "user_email", nullable = false)
     private String userEmail;
 
     @Column(name = "rating", nullable = false)
