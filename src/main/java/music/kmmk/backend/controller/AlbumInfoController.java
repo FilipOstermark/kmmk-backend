@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import music.kmmk.backend.dto.ReleaseGroupsDto;
 import music.kmmk.backend.service.AlbumInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +30,7 @@ public class AlbumInfoController {
         this.albumInfoService = albumInfoService;
     }
 
+    @CrossOrigin
     @RequestMapping("/release-group")
     public ReleaseGroupsDto searchReleaseGroup(@RequestParam String query) throws URISyntaxException {
         return this.albumInfoService.search(query);

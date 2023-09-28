@@ -20,5 +20,5 @@ public class AlbumInfoMapper {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-    };
+    }
 }

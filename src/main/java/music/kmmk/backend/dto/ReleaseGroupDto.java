@@ -13,6 +13,7 @@ public record ReleaseGroupDto(
         @JsonProperty("primary-type-id") String primaryTypeId,
         @JsonProperty("primary-type") String primaryType,
         @JsonProperty("count") int count,
+        @JsonProperty("title") String title,
         @JsonProperty("first-release-date") String firstReleaseDate,
         @JsonProperty("artist-credit") List<ArtistCreditDto> artistCredit
 
