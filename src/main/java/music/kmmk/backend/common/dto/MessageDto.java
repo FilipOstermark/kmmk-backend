@@ -1,4 +1,4 @@
-package music.kmmk.backend.dto;
+package music.kmmk.backend.common.dto;
 
 
 public record MessageDto(

@@ -1,4 +1,4 @@
-package music.kmmk.backend.model;
+package music.kmmk.backend.common.client;
 
 import java.net.http.HttpClient;
 

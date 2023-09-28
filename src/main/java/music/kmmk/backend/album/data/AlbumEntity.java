@@ -1,6 +1,8 @@
-package music.kmmk.backend.data;
+package music.kmmk.backend.album.data;
 
 import jakarta.persistence.*;
+
+import java.util.Set;
 
 @SuppressWarnings("unused")
 @Entity
@@ -36,6 +38,9 @@ public class AlbumEntity {
     @Column(nullable = false)
     private String discussionDate;
 
+    @OneToMany
+    private Set<UserRatingEntity> ratings;
+
     public AlbumEntity() { }
 
     public AlbumEntity(String mbid,
@@ -46,7 +51,8 @@ public class AlbumEntity {
                        String bestSongTitle,
                        String worstSongTitle,
                        String listeningOccasion,
-                       String discussionDate) {
+                       String discussionDate,
+                       Set<UserRatingEntity> ratings) {
         this.mbid = mbid;
         this.title = title;
         this.artistName = artistName;
@@ -56,6 +62,7 @@ public class AlbumEntity {
         this.worstSongTitle = worstSongTitle;
         this.listeningOccasion = listeningOccasion;
         this.discussionDate = discussionDate;
+        this.ratings = ratings;
     }
 
     public Long getId() {
@@ -138,4 +145,11 @@ public class AlbumEntity {
         this.artistName = artistName;
     }
 
+    public Set<UserRatingEntity> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(Set<UserRatingEntity> ratings) {
+        this.ratings = ratings;
+    }
 }

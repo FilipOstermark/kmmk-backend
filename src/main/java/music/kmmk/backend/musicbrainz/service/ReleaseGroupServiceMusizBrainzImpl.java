@@ -1,8 +1,8 @@
-package music.kmmk.backend.service;
+package music.kmmk.backend.musicbrainz.service;
 
-import music.kmmk.backend.dto.ReleaseGroupsDto;
-import music.kmmk.backend.mapper.AlbumInfoMapper;
-import music.kmmk.backend.model.DefaultHttpClient;
+import music.kmmk.backend.musicbrainz.dto.ReleaseGroupsDto;
+import music.kmmk.backend.musicbrainz.mapper.ReleaseGroupMapper;
+import music.kmmk.backend.common.client.DefaultHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,15 +15,15 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 
 @Component
-public class AlbumInfoServiceMusizBrainzImpl implements AlbumInfoService {
+public class ReleaseGroupServiceMusizBrainzImpl implements ReleaseGroupService {
 
-    private final AlbumInfoMapper albumInfoMapper;
+    private final ReleaseGroupMapper releaseGroupMapper;
 
     @Autowired
-    public AlbumInfoServiceMusizBrainzImpl(
-            AlbumInfoMapper albumInfoMapper
+    public ReleaseGroupServiceMusizBrainzImpl(
+            ReleaseGroupMapper releaseGroupMapper
     ) {
-        this.albumInfoMapper = albumInfoMapper;
+        this.releaseGroupMapper = releaseGroupMapper;
     }
 
     private static final String URL_QUERY_RELEASE_GROUP = "https://musicbrainz.org/ws/2/release-group/";
@@ -48,7 +48,7 @@ public class AlbumInfoServiceMusizBrainzImpl implements AlbumInfoService {
                 .sendAsync(httpRequestBuilder, HttpResponse.BodyHandlers.ofString())
                 .thenApply(HttpResponse::body)
                 // Note: Could just return object as-is, but will re-serialize for learning purposes
-                .thenApply(this.albumInfoMapper::jsonToReleaseGroupDto)
+                .thenApply(this.releaseGroupMapper::jsonToReleaseGroupsDto)
                 .join();
     }
 }

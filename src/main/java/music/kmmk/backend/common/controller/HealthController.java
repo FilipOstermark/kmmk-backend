@@ -1,6 +1,6 @@
-package music.kmmk.backend.controller;
+package music.kmmk.backend.common.controller;
 
-import music.kmmk.backend.dto.MessageDto;
+import music.kmmk.backend.common.dto.MessageDto;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
