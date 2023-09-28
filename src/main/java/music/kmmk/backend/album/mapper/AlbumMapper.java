@@ -5,10 +5,12 @@ import music.kmmk.backend.album.data.UserRatingEntity;
 import music.kmmk.backend.album.dto.AlbumDto;
 import music.kmmk.backend.album.dto.UserRatingDto;
 import music.kmmk.backend.common.mapper.EntityDtoMapper;
+import org.springframework.stereotype.Component;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Component
 public class AlbumMapper implements EntityDtoMapper<AlbumEntity, AlbumDto> {
     @Override
     public AlbumEntity toEntity(AlbumDto dto) {
@@ -17,7 +19,7 @@ public class AlbumMapper implements EntityDtoMapper<AlbumEntity, AlbumDto> {
                 .map(this::userRatingDtoToEntity)
                 .collect(Collectors.toSet());
 
-        return new AlbumEntity(
+        final AlbumEntity album = new AlbumEntity(
                 dto.mbid(),
                 dto.title(),
                 dto.artistName(),
@@ -28,6 +30,10 @@ public class AlbumMapper implements EntityDtoMapper<AlbumEntity, AlbumDto> {
                 dto.listeningOccasion(),
                 dto.discussionDate(),
                 ratings);
+
+        ratings.forEach(rating -> rating.setAlbum(album));
+
+        return album;
     }
 
     @Override

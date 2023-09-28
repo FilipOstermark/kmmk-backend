@@ -38,7 +38,7 @@ public class AlbumEntity {
     @Column(nullable = false)
     private String discussionDate;
 
-    @OneToMany
+    @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
     private Set<UserRatingEntity> ratings;
 
     public AlbumEntity() { }
