@@ -1,5 +1,8 @@
 package music.kmmk.backend.security.config;
 
+import music.kmmk.backend.oauth2.model.FacebookOAuth2User;
+import music.kmmk.backend.oauth2.service.FacebookOAuth2UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -20,14 +23,29 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
+    @Autowired
+    private FacebookOAuth2UserService oAuth2UserService;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/", "/login").permitAll()
+                        .requestMatchers("/", "/error").permitAll()
                         .anyRequest().authenticated()
                 )
-                .oauth2Login(Customizer.withDefaults())
+                .oauth2Login(oauth2 -> oauth2
+                        .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
+                                .userService(this.oAuth2UserService)
+                        )
+                        .successHandler((request, response, authentication) -> {
+                            final FacebookOAuth2User user = (FacebookOAuth2User)authentication.getPrincipal();
+
+                            this.oAuth2UserService.saveUser(user);
+
+                            response.sendRedirect("/user/self");
+                        })
+                )
+                .logout(logout -> logout.logoutSuccessUrl("/logout"))
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();

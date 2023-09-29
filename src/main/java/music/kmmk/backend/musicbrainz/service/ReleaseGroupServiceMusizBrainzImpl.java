@@ -4,7 +4,6 @@ import music.kmmk.backend.musicbrainz.dto.ReleaseGroupsDto;
 import music.kmmk.backend.musicbrainz.mapper.ReleaseGroupMapper;
 import music.kmmk.backend.common.client.DefaultHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;

@@ -2,17 +2,12 @@ package music.kmmk.backend.album.controller;
 
 import music.kmmk.backend.album.data.AlbumEntity;
 import music.kmmk.backend.album.data.AlbumRepository;
-import music.kmmk.backend.album.data.UserRatingEntity;
 import music.kmmk.backend.album.dto.AlbumDto;
-import music.kmmk.backend.album.dto.UserRatingDto;
 import music.kmmk.backend.album.mapper.AlbumMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 
 @RestController
@@ -29,17 +24,15 @@ public class AlbumController {
         this.albumMapper = albumMapper;
     }
 
-
-
     @PostMapping("/")
-    public AlbumEntity createAlbum(@RequestBody AlbumDto albumDto) {
+    public AlbumEntity create(@RequestBody AlbumDto albumDto) {
         final AlbumEntity albumEntity = albumMapper.toEntity(albumDto);
         return this.albumRepository.save(albumEntity);
     }
 
     @GetMapping("/list")
-    public List<AlbumDto> findAllAlbums() {
-        // TODO Paginate query
+    public List<AlbumDto> readList() {
+        // TODO Pagination
         return albumMapper.toDtoList(albumRepository.findAll());
     }
 
