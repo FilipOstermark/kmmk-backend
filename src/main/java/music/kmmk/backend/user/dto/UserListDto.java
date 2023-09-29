@@ -1,13 +1,12 @@
 package music.kmmk.backend.user.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import music.kmmk.backend.common.dto.PaginatedDto;
 
 import java.util.List;
 
-public record UserListDto(
-        @JsonProperty("count") int count,
-        @JsonProperty("page") int page,
-        @JsonProperty("lastPage") int lastPage,
-        @JsonProperty("users") List<UserDto> users
-) {
+// TODO Add URI
+public class UserListDto extends PaginatedDto<UserDto> {
+    public UserListDto(int count, int page, int lastPage, List<UserDto> results) {
+        super(count, page, lastPage, results);
+    }
 }

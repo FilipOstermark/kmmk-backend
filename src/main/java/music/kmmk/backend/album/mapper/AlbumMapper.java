@@ -5,6 +5,8 @@ import music.kmmk.backend.album.data.UserRatingEntity;
 import music.kmmk.backend.album.dto.AlbumDto;
 import music.kmmk.backend.album.dto.UserRatingDto;
 import music.kmmk.backend.common.mapper.EntityDtoMapper;
+import music.kmmk.backend.user.mapper.UserEntityDtoMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -12,6 +14,14 @@ import java.util.stream.Collectors;
 
 @Component
 public class AlbumMapper implements EntityDtoMapper<AlbumEntity, AlbumDto> {
+
+    private final UserEntityDtoMapper userMapper;
+
+    @Autowired
+    public AlbumMapper(UserEntityDtoMapper userMapper) {
+        this.userMapper = userMapper;
+    }
+
     @Override
     public AlbumEntity toEntity(AlbumDto dto) {
         final Set<UserRatingEntity> ratings = dto.ratings()
@@ -54,15 +64,16 @@ public class AlbumMapper implements EntityDtoMapper<AlbumEntity, AlbumDto> {
     }
 
     private UserRatingEntity userRatingDtoToEntity(UserRatingDto dto) {
+
         return new UserRatingEntity(
-                dto.userEmail(),
+                this.userMapper.toEntity(dto.user()),
                 dto.rating()
         );
     }
 
     private UserRatingDto userRatingEntityToDto(UserRatingEntity entity) {
         return new UserRatingDto(
-                entity.getUserEmail(),
+                this.userMapper.toDto(entity.getUser()),
                 entity.getRating()
         );
     }

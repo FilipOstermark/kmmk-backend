@@ -38,9 +38,9 @@ public class FacebookOAuth2UserService extends DefaultOAuth2UserService  {
         return new FacebookOAuth2User(user);
     }
 
-    public void saveUser(FacebookOAuth2User facebookOAuth2User) {
+    public UserEntity saveUser(FacebookOAuth2User facebookOAuth2User) {
         final UserEntity userEntity = this.userMapper.toEntity(facebookOAuth2User);
-        this.userRepository.saveIfNotExists(userEntity);
+        return this.userRepository.saveIfNotExists(userEntity);
     }
 
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
+// TODO Add URI
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record AlbumDto(
     @JsonProperty("id") Long id,

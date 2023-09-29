@@ -6,6 +6,7 @@ import java.util.Set;
 
 @SuppressWarnings("unused")
 @Entity
+@Table(name = "albums")
 public class AlbumEntity {
 
     @Id
