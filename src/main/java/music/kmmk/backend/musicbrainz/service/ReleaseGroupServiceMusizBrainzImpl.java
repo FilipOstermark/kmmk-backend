@@ -5,6 +5,7 @@ import music.kmmk.backend.musicbrainz.mapper.ReleaseGroupMapper;
 import music.kmmk.backend.common.client.DefaultHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,7 +15,7 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 
-@Component
+@Service
 public class ReleaseGroupServiceMusizBrainzImpl implements ReleaseGroupService {
 
     private final ReleaseGroupMapper releaseGroupMapper;
