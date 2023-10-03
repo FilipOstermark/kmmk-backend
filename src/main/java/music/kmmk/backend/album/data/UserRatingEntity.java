@@ -17,11 +17,11 @@ public class UserRatingEntity {
     private Integer rating;
 
     @ManyToOne
-    @JoinColumn(name = "album_id", nullable = false)
+    @JoinColumn(name = "album_id", referencedColumnName = "id", nullable = false)
     private AlbumEntity album;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private UserEntity user;
 
     public UserRatingEntity() { }
