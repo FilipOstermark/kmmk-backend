@@ -1,6 +1,6 @@
 package music.kmmk.backend.oauth2.service;
 
-import music.kmmk.backend.oauth2.model.FacebookOAuth2User;
+import music.kmmk.backend.oauth2.model.GoogleOAuth2User;
 import music.kmmk.backend.user.data.UserEntity;
 import music.kmmk.backend.user.data.UserRepository;
 import music.kmmk.backend.user.service.UserService;
@@ -29,7 +29,7 @@ public class UserServiceOAuth2Impl implements UserService {
             return Optional.empty();
         }
 
-        final String email = ((FacebookOAuth2User) authn.getPrincipal()).getEmail();
+        final String email = ((GoogleOAuth2User) authn.getPrincipal()).getEmail();
 
         return this.userRepository.findByEmail(email);
     }

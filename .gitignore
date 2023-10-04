@@ -204,6 +204,3 @@ private-notes.md
 # Secrets
 
 database.env
-
-# TODO: Find out how to handle this properly
-**/application.yml

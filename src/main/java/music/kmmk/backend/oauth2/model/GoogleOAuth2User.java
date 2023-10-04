@@ -6,17 +6,10 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import java.util.Collection;
 import java.util.Map;
 
-/**
- * Reference:
- * <a href="https://www.codejava.net/frameworks/spring-boot/social-login-with-facebook-example">
- *     CodeJava - Login with Facebook
- * </a>
- */
-public class FacebookOAuth2User implements OAuth2User {
-
+public class GoogleOAuth2User implements OAuth2User {
     private final OAuth2User user;
 
-    public FacebookOAuth2User(OAuth2User user) {
+    public GoogleOAuth2User(OAuth2User user) {
         this.user = user;
     }
 
@@ -43,5 +36,4 @@ public class FacebookOAuth2User implements OAuth2User {
     public String getEmail() {
         return this.user.getAttribute("email");
     }
-
 }

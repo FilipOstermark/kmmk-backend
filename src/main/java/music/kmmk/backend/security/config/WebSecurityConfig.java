@@ -1,7 +1,7 @@
 package music.kmmk.backend.security.config;
 
-import music.kmmk.backend.oauth2.model.FacebookOAuth2User;
-import music.kmmk.backend.oauth2.service.FacebookOAuth2UserService;
+import music.kmmk.backend.oauth2.model.GoogleOAuth2User;
+import music.kmmk.backend.oauth2.service.GoogleOAuth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,10 +10,8 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -30,7 +28,7 @@ import java.util.stream.Collectors;
 public class WebSecurityConfig {
 
     @Autowired
-    private FacebookOAuth2UserService oAuth2UserService;
+    private GoogleOAuth2UserService oAuth2UserService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -41,11 +39,11 @@ public class WebSecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 -> oauth2
-                        .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
-                                .userService(this.oAuth2UserService)
-                        )
+                        .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig.userService(this.oAuth2UserService))
+                        .authorizationEndpoint(auth -> auth.baseUri("/oauth2/authorization"))
+                        .redirectionEndpoint(redirection -> redirection.baseUri("/oauth2/callback/*"))
                         .successHandler((request, response, authentication) -> {
-                            final FacebookOAuth2User user = (FacebookOAuth2User)authentication.getPrincipal();
+                            final GoogleOAuth2User user = (GoogleOAuth2User) authentication.getPrincipal();
                             System.out.println("RESPONSE:");
                             System.out.println("headers: " + response.getHeaderNames().stream().collect(Collectors.toMap(headerName -> headerName, response::getHeader)));
                             System.out.println("status:  " + response.getStatus());
@@ -56,7 +54,7 @@ public class WebSecurityConfig {
                             response.sendRedirect("http://localhost:5173/oauth2/token?token=");
                         })
                 )
-                // TODO How to handle this?
+                // TODO Use JWT as auth mechanism
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults());
 

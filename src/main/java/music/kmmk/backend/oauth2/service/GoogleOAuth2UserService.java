@@ -1,7 +1,7 @@
 package music.kmmk.backend.oauth2.service;
 
-import music.kmmk.backend.oauth2.mapper.UserEntityToOAuth2FacebookUserMapper;
-import music.kmmk.backend.oauth2.model.FacebookOAuth2User;
+import music.kmmk.backend.oauth2.mapper.UserEntityToOAuth2GoogleUserMapper;
+import music.kmmk.backend.oauth2.model.GoogleOAuth2User;
 import music.kmmk.backend.user.data.UserEntity;
 import music.kmmk.backend.user.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +18,16 @@ import org.springframework.stereotype.Service;
  * </a>
  */
 @Service
-public class FacebookOAuth2UserService extends DefaultOAuth2UserService  {
+public class GoogleOAuth2UserService extends DefaultOAuth2UserService  {
 
     @Autowired
     private final UserRepository userRepository;
 
     @Autowired
-    private final UserEntityToOAuth2FacebookUserMapper userMapper;
+    private final UserEntityToOAuth2GoogleUserMapper userMapper;
 
     @Autowired
-    public FacebookOAuth2UserService(UserRepository userRepository, UserEntityToOAuth2FacebookUserMapper userMapper) {
+    public GoogleOAuth2UserService(UserRepository userRepository, UserEntityToOAuth2GoogleUserMapper userMapper) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
     }
@@ -35,12 +35,12 @@ public class FacebookOAuth2UserService extends DefaultOAuth2UserService  {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         final OAuth2User user = super.loadUser(userRequest);
-        return new FacebookOAuth2User(user);
+        return new GoogleOAuth2User(user);
     }
 
-    public UserEntity saveUser(FacebookOAuth2User facebookOAuth2User) {
-        final UserEntity userEntity = this.userMapper.toEntity(facebookOAuth2User);
-        return this.userRepository.saveIfNotExists(userEntity);
+    public void saveUser(GoogleOAuth2User googleOAuth2User) {
+        final UserEntity userEntity = this.userMapper.toEntity(googleOAuth2User);
+        this.userRepository.saveIfNotExists(userEntity);
     }
 
 }
