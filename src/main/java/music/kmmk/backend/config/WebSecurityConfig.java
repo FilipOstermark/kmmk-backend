@@ -1,7 +1,9 @@
-package music.kmmk.backend.security.config;
+package music.kmmk.backend.config;
 
 import music.kmmk.backend.oauth2.model.GoogleOAuth2User;
-import music.kmmk.backend.oauth2.service.GoogleOAuth2UserService;
+import music.kmmk.backend.oauth2.service.OAuth2UserServiceGoogleImpl;
+import music.kmmk.backend.security.TokenAuthenticationFilter;
+import music.kmmk.backend.security.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,9 +12,9 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-
-import java.util.stream.Collectors;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * References:
@@ -28,7 +30,13 @@ import java.util.stream.Collectors;
 public class WebSecurityConfig {
 
     @Autowired
-    private GoogleOAuth2UserService oAuth2UserService;
+    private OAuth2UserServiceGoogleImpl oAuth2UserService;
+
+    @Autowired
+    private TokenAuthenticationFilter tokenAuthenticationFilter;
+
+    @Autowired
+    private TokenProvider tokenProvider;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -44,18 +52,21 @@ public class WebSecurityConfig {
                         .redirectionEndpoint(redirection -> redirection.baseUri("/oauth2/callback/*"))
                         .successHandler((request, response, authentication) -> {
                             final GoogleOAuth2User user = (GoogleOAuth2User) authentication.getPrincipal();
-                            System.out.println("RESPONSE:");
-                            System.out.println("headers: " + response.getHeaderNames().stream().collect(Collectors.toMap(headerName -> headerName, response::getHeader)));
-                            System.out.println("status:  " + response.getStatus());
-                            System.out.println("isAuth:  " + authentication.isAuthenticated());
 
-                            this.oAuth2UserService.saveUser(user);
+                            System.out.println("OAuth user attributes:");
+                            user.getAttributes().forEach((key, val) ->
+                                    System.out.println("Attr -> " + key + ": " + val.toString())
+                            );
 
-                            response.sendRedirect("http://localhost:5173/oauth2/token?token=");
+                            final String authToken = this.tokenProvider.create(user.getEmail());
+                            response.sendRedirect("http://localhost:5173/oauth2/token?token=" + authToken);
                         })
                 )
-                // TODO Use JWT as auth mechanism
+                .addFilterBefore(this.tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .formLogin(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
+                .anonymous(AbstractHttpConfigurer::disable)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();

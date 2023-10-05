@@ -12,12 +12,12 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class UserServiceOAuth2Impl implements UserService {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
     @Autowired
-    public UserServiceOAuth2Impl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -33,4 +33,5 @@ public class UserServiceOAuth2Impl implements UserService {
 
         return this.userRepository.findByEmail(email);
     }
+
 }

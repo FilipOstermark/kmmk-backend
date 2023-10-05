@@ -203,4 +203,4 @@ private-notes.md
 
 # Secrets
 
-database.env
+application-secrets.yml
