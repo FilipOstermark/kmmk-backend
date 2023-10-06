@@ -19,7 +19,7 @@ public class ReleaseGroupController {
     }
 
     @CrossOrigin
-    @RequestMapping("/")
+    @RequestMapping
     public ReleaseGroupsDto searchReleaseGroup(@RequestParam String query) throws URISyntaxException {
         return this.releaseGroupService.search(query);
     }

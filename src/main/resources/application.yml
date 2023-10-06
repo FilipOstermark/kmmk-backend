@@ -16,7 +16,7 @@ spring:
     database: POSTGRESQL
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
   datasource:
     platform: postgres
     url: jdbc:postgresql://db.gaotasxpjtdkcravtjzv.supabase.co:5432/postgres

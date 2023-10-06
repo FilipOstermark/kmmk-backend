@@ -1,6 +1,7 @@
 package music.kmmk.backend.album.data;
 
 import jakarta.persistence.*;
+import music.kmmk.backend.user.data.UserEntity;
 
 import java.util.Set;
 
@@ -42,6 +43,9 @@ public class AlbumEntity {
     @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
     private Set<UserRatingEntity> ratings;
 
+    @ManyToOne
+    private UserEntity pickedBy;
+
     public AlbumEntity() { }
 
     public AlbumEntity(String mbid,
@@ -53,7 +57,8 @@ public class AlbumEntity {
                        String worstSongTitle,
                        String listeningOccasion,
                        String discussionDate,
-                       Set<UserRatingEntity> ratings) {
+                       Set<UserRatingEntity> ratings,
+                       UserEntity pickedBy) {
         this.mbid = mbid;
         this.title = title;
         this.artistName = artistName;
@@ -64,6 +69,7 @@ public class AlbumEntity {
         this.listeningOccasion = listeningOccasion;
         this.discussionDate = discussionDate;
         this.ratings = ratings;
+        this.pickedBy = pickedBy;
     }
 
     public Long getId() {
@@ -152,5 +158,13 @@ public class AlbumEntity {
 
     public void setRatings(Set<UserRatingEntity> ratings) {
         this.ratings = ratings;
+    }
+
+    public UserEntity getPickedBy() {
+        return pickedBy;
+    }
+
+    public void setPickedBy(UserEntity pickedBy) {
+        this.pickedBy = pickedBy;
     }
 }

@@ -26,7 +26,7 @@ public class AlbumController {
         this.albumMapper = albumMapper;
     }
 
-    @PostMapping("/")
+    @PostMapping
     public AlbumEntity create(@RequestBody AlbumDto albumDto) {
         final AlbumEntity albumEntity = albumMapper.toEntity(albumDto);
         return this.albumRepository.save(albumEntity);

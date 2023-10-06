@@ -39,7 +39,8 @@ public class AlbumMapper implements EntityDtoMapper<AlbumEntity, AlbumDto> {
                 dto.worstSongTitle(),
                 dto.listeningOccasion(),
                 dto.discussionDate(),
-                ratings);
+                ratings,
+                this.userMapper.toEntity(dto.pickedBy()));
 
         ratings.forEach(rating -> rating.setAlbum(album));
 
@@ -59,7 +60,8 @@ public class AlbumMapper implements EntityDtoMapper<AlbumEntity, AlbumDto> {
                 albumEntity.getWorstSongTitle(),
                 albumEntity.getListeningOccasion(),
                 albumEntity.getDiscussionDate(),
-                albumEntity.getRatings().stream().map(this::userRatingEntityToDto).toList()
+                albumEntity.getRatings().stream().map(this::userRatingEntityToDto).toList(),
+                this.userMapper.toDto(albumEntity.getPickedBy())
         );
     }
 

@@ -2,6 +2,7 @@ package music.kmmk.backend.album.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import music.kmmk.backend.user.dto.UserDto;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ public record AlbumDto(
     @JsonProperty("worstSongTitle") String worstSongTitle,
     @JsonProperty("listeningOccasion") String listeningOccasion,
     @JsonProperty("discussionDate") String discussionDate,
-    @JsonProperty("ratings") List<UserRatingDto> ratings
+    @JsonProperty("ratings") List<UserRatingDto> ratings,
+    @JsonProperty("pickedBy") UserDto pickedBy
 ) {
 }
