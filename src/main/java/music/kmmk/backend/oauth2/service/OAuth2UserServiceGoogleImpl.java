@@ -1,10 +1,10 @@
 package music.kmmk.backend.oauth2.service;
 
+import music.kmmk.backend.common.util.StringExtensions;
 import music.kmmk.backend.oauth2.mapper.UserEntityToOAuth2GoogleUserMapper;
 import music.kmmk.backend.oauth2.model.GoogleOAuth2User;
 import music.kmmk.backend.user.data.UserEntity;
 import music.kmmk.backend.user.data.UserRepository;
-import org.h2.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -40,7 +40,7 @@ public class OAuth2UserServiceGoogleImpl extends DefaultOAuth2UserService implem
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         final OAuth2User oAuth2User = super.loadUser(userRequest);
         final String email = oAuth2User.getAttribute("name");
-        if (StringUtils.isNullOrEmpty(email)) {
+        if (StringExtensions.isNullOrBlank(email)) {
             throw new OAuth2AuthenticationException("Failed to get e-mail from user");
         }
 

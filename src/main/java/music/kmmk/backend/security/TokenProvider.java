@@ -4,8 +4,8 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
+import music.kmmk.backend.common.util.StringExtensions;
 import music.kmmk.backend.config.SecretsConfig;
-import org.h2.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +42,7 @@ public class TokenProvider {
                 .parseClaimsJws(token)
                 .getBody();
 
-        if (StringUtils.isNullOrEmpty(claims.getSubject())) {
+        if (StringExtensions.isNullOrBlank(claims.getSubject())) {
             throw new IllegalArgumentException("Invalid JWT subject - missing email");
         }
 

@@ -4,7 +4,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.h2.util.StringUtils;
+import music.kmmk.backend.common.util.StringExtensions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -59,7 +59,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private String extractBearerToken(@NonNull HttpServletRequest request) {
         final String bearerToken = request.getHeader("Authorization");
-        if (StringUtils.isNullOrEmpty(bearerToken) || !bearerToken.startsWith("Bearer ")) {
+        if (StringExtensions.isNullOrBlank(bearerToken) || !bearerToken.startsWith("Bearer ")) {
             throw new IllegalArgumentException("Request does not contain Bearer token");
         }
 
