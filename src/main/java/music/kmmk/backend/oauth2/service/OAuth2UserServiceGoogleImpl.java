@@ -39,20 +39,23 @@ public class OAuth2UserServiceGoogleImpl extends DefaultOAuth2UserService implem
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         final OAuth2User oAuth2User = super.loadUser(userRequest);
-        final String email = oAuth2User.getAttribute("name");
+        final String email = oAuth2User.getAttribute("email");
         if (StringExtensions.isNullOrBlank(email)) {
             throw new OAuth2AuthenticationException("Failed to get e-mail from user");
         }
 
-        final GoogleOAuth2User googleOAuth2User = new GoogleOAuth2User(oAuth2User);
-        this.saveUserIfNotExists(googleOAuth2User);
-
-        return googleOAuth2User;
-    }
-
-    public void saveUserIfNotExists(GoogleOAuth2User googleOAuth2User) {
-        final UserEntity userEntity = this.userMapper.toEntity(googleOAuth2User);
-        this.userRepository.saveIfNotExists(userEntity);
+        // TODO Factory
+        final UserEntity newUser = new UserEntity(oAuth2User.getAttribute("name"),
+                oAuth2User.getAttribute("email"));
+        final UserEntity existingUser = this.userRepository.saveIfNotExists(newUser);
+        return new GoogleOAuth2User(
+                existingUser.getId(),
+                existingUser.getName(),
+                existingUser.getEmail(),
+                null,
+                oAuth2User.getAuthorities(),
+                oAuth2User.getAttributes()
+        );
     }
 
     @Override

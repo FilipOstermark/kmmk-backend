@@ -44,7 +44,8 @@ public class AlbumEntity {
     private Set<UserRatingEntity> ratings;
 
     @ManyToOne
-    private UserEntity pickedBy;
+    @JoinColumn(name = "picked_by_user_id")
+    private UserEntity pickedByUser;
 
     public AlbumEntity() { }
 
@@ -58,7 +59,7 @@ public class AlbumEntity {
                        String listeningOccasion,
                        String discussionDate,
                        Set<UserRatingEntity> ratings,
-                       UserEntity pickedBy) {
+                       UserEntity pickedByUser) {
         this.mbid = mbid;
         this.title = title;
         this.artistName = artistName;
@@ -69,7 +70,7 @@ public class AlbumEntity {
         this.listeningOccasion = listeningOccasion;
         this.discussionDate = discussionDate;
         this.ratings = ratings;
-        this.pickedBy = pickedBy;
+        this.pickedByUser = pickedByUser;
     }
 
     public Long getId() {
@@ -160,11 +161,11 @@ public class AlbumEntity {
         this.ratings = ratings;
     }
 
-    public UserEntity getPickedBy() {
-        return pickedBy;
+    public UserEntity getPickedByUser() {
+        return pickedByUser;
     }
 
-    public void setPickedBy(UserEntity pickedBy) {
-        this.pickedBy = pickedBy;
+    public void setPickedByUser(UserEntity pickedByUser) {
+        this.pickedByUser = pickedByUser;
     }
 }

@@ -8,30 +8,25 @@ import java.util.Collection;
 import java.util.Map;
 
 public class GoogleOAuth2User implements OAuth2User, UserDetails {
+    private final Long id;
     private final String name;
     private final String email;
     private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
     private final Map<String, Object> attributes;
 
-    public GoogleOAuth2User(String name,
+    public GoogleOAuth2User(Long id,
+                            String name,
                             String email,
                             String password,
                             Collection<? extends GrantedAuthority> authorities,
                             Map<String, Object> attributes) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
         this.attributes = attributes;
-    }
-
-    public GoogleOAuth2User(OAuth2User user) {
-        this(user.getAttribute("name"),
-                user.getAttribute("email"),
-                user.getAttribute("password"),
-                user.getAuthorities(),
-                user.getAttributes());
     }
 
     @Override
@@ -47,6 +42,10 @@ public class GoogleOAuth2User implements OAuth2User, UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.authorities;
+    }
+
+    public Long getId() {
+        return this.id;
     }
 
     @Override

@@ -58,7 +58,9 @@ public class WebSecurityConfig {
                                     System.out.println("Attr -> " + key + ": " + val.toString())
                             );
 
-                            final String authToken = this.tokenProvider.create(user.getEmail());
+                            final String authToken = this.tokenProvider.create(user.getEmail(),
+                                    user.getName(),
+                                    user.getId().toString());
                             response.sendRedirect("http://localhost:5173/oauth2/token?token=" + authToken);
                         })
                 )

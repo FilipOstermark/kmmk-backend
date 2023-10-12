@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.Map;
 
 @Service
 public class TokenProvider {
@@ -22,13 +23,14 @@ public class TokenProvider {
         this.secretsConfig = secretsConfig;
     }
 
-    public String create(String userEmail) {
+    public String create(String userEmail, String userName, String userId) {
         final Date now = new Date();
         final Date expirationDate = new Date(now.getTime() + secretsConfig.getAuthTokenExpirationMs());
         final SecretKey key = loadKey();
 
         return Jwts.builder()
                 .setSubject(userEmail)
+                .setClaims(Map.of("name", userName, "userId", userId))
                 .setIssuedAt(now)
                 .setExpiration(expirationDate)
                 .setSubject(userEmail)

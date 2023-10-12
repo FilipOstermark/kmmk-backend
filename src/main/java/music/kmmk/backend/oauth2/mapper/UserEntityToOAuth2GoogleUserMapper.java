@@ -23,6 +23,7 @@ public class UserEntityToOAuth2GoogleUserMapper implements EntityDtoMapper<UserE
     @Override
     public GoogleOAuth2User toDto(UserEntity userEntity) throws UnsupportedOperationException {
         return new GoogleOAuth2User(
+                userEntity.getId(),
                 userEntity.getName(),
                 userEntity.getEmail(),
                 null,

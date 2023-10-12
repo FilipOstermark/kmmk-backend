@@ -61,7 +61,7 @@ public class AlbumMapper implements EntityDtoMapper<AlbumEntity, AlbumDto> {
                 albumEntity.getListeningOccasion(),
                 albumEntity.getDiscussionDate(),
                 albumEntity.getRatings().stream().map(this::userRatingEntityToDto).toList(),
-                this.userMapper.toDto(albumEntity.getPickedBy())
+                this.userMapper.toDto(albumEntity.getPickedByUser())
         );
     }
 
