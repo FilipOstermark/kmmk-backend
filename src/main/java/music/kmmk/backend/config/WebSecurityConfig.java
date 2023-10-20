@@ -5,6 +5,7 @@ import music.kmmk.backend.oauth2.service.OAuth2UserServiceGoogleImpl;
 import music.kmmk.backend.security.TokenAuthenticationFilter;
 import music.kmmk.backend.security.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -38,6 +39,9 @@ public class WebSecurityConfig {
     @Autowired
     private TokenProvider tokenProvider;
 
+    @Autowired
+    private AppConfig appConfig;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -61,7 +65,8 @@ public class WebSecurityConfig {
                             final String authToken = this.tokenProvider.create(user.getEmail(),
                                     user.getName(),
                                     user.getId().toString());
-                            response.sendRedirect("http://localhost:5173/oauth2/token?token=" + authToken);
+
+                            response.sendRedirect(appConfig.getClientOAuth2TokenUrl(authToken));
                         })
                 )
                 .addFilterBefore(this.tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
