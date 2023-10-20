@@ -5,6 +5,7 @@ import music.kmmk.backend.album.data.AlbumRepository;
 import music.kmmk.backend.album.dto.AlbumDto;
 import music.kmmk.backend.album.dto.AlbumListDto;
 import music.kmmk.backend.album.mapper.AlbumMapper;
+import music.kmmk.backend.common.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +14,9 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("album")
+@RequestMapping(Constants.API_V1_URI + "/album")
 public class AlbumController {
 
-    // TODO Move this dep. to service?
     private final AlbumRepository albumRepository;
     private final AlbumMapper albumMapper;
 

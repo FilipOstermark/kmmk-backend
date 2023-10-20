@@ -1,5 +1,6 @@
 package music.kmmk.backend.user.controller;
 
+import music.kmmk.backend.common.Constants;
 import music.kmmk.backend.common.dto.MessageDto;
 import music.kmmk.backend.user.data.UserEntity;
 import music.kmmk.backend.user.data.UserRepository;
@@ -15,10 +16,10 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping(Constants.API_V1_URI + "/user")
 public class UserController {
 
-    public static final String DELETED_USER = "[Deleted user]";
+    public static final String DELETED_USER_NAME = "[Deleted user]";
 
     private final UserRepository userRepository;
     private final UserEntityDtoMapper userEntityDtoMapper;
@@ -51,8 +52,8 @@ public class UserController {
 
         // Rather than delete the user itself, clear their personal data
         // This allows for recovery if done by mistake
-        userEntity.setName(DELETED_USER);
-        userEntity.setEmail(DELETED_USER);
+        userEntity.setName(DELETED_USER_NAME);
+        userEntity.setEmail(DELETED_USER_NAME);
         this.userRepository.save(userEntity);
 
         return new MessageDto("Successfully deleted user with ID " + userEntity.getId());
