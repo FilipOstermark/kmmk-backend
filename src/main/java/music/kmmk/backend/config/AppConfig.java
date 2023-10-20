@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "app")
 public class AppConfig {
+    private String clientBaseUrl;
     private String clientOAuth2TokenUrl;
 
     public String getClientOAuth2TokenUrl() {
@@ -18,5 +19,13 @@ public class AppConfig {
 
     public void setClientOAuth2TokenUrl(String clientOAuth2TokenUrl) {
         this.clientOAuth2TokenUrl = clientOAuth2TokenUrl;
+    }
+
+    public String getClientBaseUrl() {
+        return clientBaseUrl;
+    }
+
+    public void setClientBaseUrl(String clientBaseUrl) {
+        this.clientBaseUrl = clientBaseUrl;
     }
 }

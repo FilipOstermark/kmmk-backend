@@ -1,5 +1,6 @@
 package music.kmmk.backend.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.lang.NonNull;
@@ -15,11 +16,14 @@ import java.util.Arrays;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
+    @Autowired
+    private AppConfig appConfig;
+
     @Override
     public void addCorsMappings(@NonNull CorsRegistry registry) {
         WebMvcConfigurer.super.addCorsMappings(registry);
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:5173")
+                .allowedOrigins(appConfig.getClientBaseUrl())
                 .allowedHeaders("*")
                 .allowedMethods(
                         HttpMethod.GET.name(),

@@ -19,4 +19,5 @@ spring:
     url: jdbc:postgresql://db.gaotasxpjtdkcravtjzv.supabase.co:5432/postgres
     username: postgres
 app:
+  clientBaseUrl: https://filipostermark.github.io
   clientOAuth2TokenUrl: https://filipostermark.github.io/kmmk-frontend/#/oauth2/token
