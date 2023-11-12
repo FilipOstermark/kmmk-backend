@@ -5,7 +5,7 @@ spring:
         registration:
           google:
             clientId: 815099873461-ntqp372b2spo4rp95r7v8cjqi2k9n3bd.apps.googleusercontent.com
-            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+            redirectUri: "{baseUrl}/api/v1/oauth2/callback/{registrationId}"
             scope:
               - email
               - profile
