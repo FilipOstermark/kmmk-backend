@@ -16,6 +16,8 @@ public class AlbumEntity {
 
     private String mbid;
 
+    private String coverArtUrl;
+
     @Column(nullable = false, columnDefinition = "TEXT")
     private String title;
 
@@ -59,7 +61,8 @@ public class AlbumEntity {
                        String listeningOccasion,
                        String discussionDate,
                        Set<UserRatingEntity> ratings,
-                       UserEntity pickedByUser) {
+                       UserEntity pickedByUser,
+                       String coverArtUrl) {
         this.mbid = mbid;
         this.title = title;
         this.artistName = artistName;
@@ -167,5 +170,13 @@ public class AlbumEntity {
 
     public void setPickedByUser(UserEntity pickedByUser) {
         this.pickedByUser = pickedByUser;
+    }
+
+    public String getCoverArtUrl() {
+        return coverArtUrl;
+    }
+
+    public void setCoverArtUrl(String coverArtUrl) {
+        this.coverArtUrl = coverArtUrl;
     }
 }

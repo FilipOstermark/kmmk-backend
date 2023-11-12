@@ -20,6 +20,7 @@ public record AlbumDto(
     @JsonProperty("listeningOccasion") String listeningOccasion,
     @JsonProperty("discussionDate") String discussionDate,
     @JsonProperty("ratings") List<UserRatingDto> ratings,
-    @JsonProperty("pickedBy") UserDto pickedBy
+    @JsonProperty("pickedBy") UserDto pickedBy,
+    @JsonProperty("coverArtUrl") String coverArtUrl
 ) {
 }
