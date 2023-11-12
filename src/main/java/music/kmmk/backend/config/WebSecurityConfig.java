@@ -1,5 +1,6 @@
 package music.kmmk.backend.config;
 
+import music.kmmk.backend.common.Constants;
 import music.kmmk.backend.oauth2.model.GoogleOAuth2User;
 import music.kmmk.backend.oauth2.service.OAuth2UserServiceGoogleImpl;
 import music.kmmk.backend.security.TokenAuthenticationFilter;
@@ -47,14 +48,22 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/error", "/login/**", "/oauth2/**").permitAll()
+                        .requestMatchers(
+                                Constants.API_V1_URI + "/error",
+                                Constants.API_V1_URI + "api/v1/login/**",
+                                Constants.API_V1_URI + "/oauth2/**"
+                        ).permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 -> oauth2
                         .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig.userService(this.oAuth2UserService))
-                        .authorizationEndpoint(auth -> auth.baseUri("/oauth2/authorization"))
-                        .redirectionEndpoint(redirection -> redirection.baseUri("/oauth2/callback/*"))
+                        .authorizationEndpoint(auth ->
+                                auth.baseUri(Constants.API_V1_URI + "/oauth2/authorization")
+                        )
+                        .redirectionEndpoint(redirection ->
+                                redirection.baseUri(Constants.API_V1_URI + "/oauth2/callback/*")
+                        )
                         .successHandler((request, response, authentication) -> {
                             final GoogleOAuth2User user = (GoogleOAuth2User) authentication.getPrincipal();
 
