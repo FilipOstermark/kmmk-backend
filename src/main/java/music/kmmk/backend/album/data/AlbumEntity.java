@@ -16,6 +16,7 @@ public class AlbumEntity {
 
     private String mbid;
 
+    @Column(columnDefinition = "TEXT")
     private String coverArtUrl;
 
     @Column(nullable = false, columnDefinition = "TEXT")
